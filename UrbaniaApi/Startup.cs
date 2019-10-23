@@ -36,7 +36,8 @@ namespace UrbaniaApi
             services.AddMvc(x => x.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddCors();
             services.AddScoped<IauthRepositorio, AuthRepositorio>();
-           // services.AddAutoMapper(typeof(AuthRepositorio).Assembly);
+            services.AddScoped<IUrbaniaRepositorio , UrbaniaRepositorio>();
+            services.AddAutoMapper(typeof(UrbaniaRepositorio).Assembly);
               services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opciones =>{
             opciones.TokenValidationParameters = new TokenValidationParameters
                 {
