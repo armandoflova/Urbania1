@@ -7,5 +7,7 @@ namespace UrbaniaApi.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options){}
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Proyecto> Proyectos { get; set; }
+        public DbSet<Foto> Foto { get; set; }
     }
 }
