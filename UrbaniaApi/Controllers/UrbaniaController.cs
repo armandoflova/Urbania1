@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UrbaniaApi.Data;
 using UrbaniaApi.Dtos;
+using UrbaniaApi.Models;
 
 namespace UrbaniaApi.Controllers
 {
@@ -35,6 +37,35 @@ namespace UrbaniaApi.Controllers
             var proyecto = await _repo.ObtenerProyecto(id);
             var proyectoRetornar = _mapper.Map<ProyectoReturn>(proyecto);
             return Ok(proyectoRetornar);
+        }
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> editarProyecto(int id, EditarProyecto ediarProyecto)
+        {
+            var proyecto = await _repo.ObtenerProyecto(id);
+            proyecto.FechaModificacion = DateTime.Now;
+            _mapper.Map(ediarProyecto , proyecto);
+            if(await _repo.GuardarTodo())
+                return NoContent();
+
+            throw new Exception("No se pudo actualizar Proyecto");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> guardarProyecto(ProyectoGuardar proyectoguardar)
+        {
+           proyectoguardar.FechaCreacion = DateTime.Now;
+
+           var proyecto = _mapper.Map<Proyecto>(proyectoguardar);
+
+           _repo.Agregar(proyecto);
+
+           if(await _repo.GuardarTodo())
+                return NoContent();
+            
+            throw new Exception("No se pudo guardar");
+
+
         }
 
     }

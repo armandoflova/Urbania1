@@ -10,6 +10,8 @@ namespace UrbaniaApi.Helpers
         {
             CreateMap<Proyecto , ProyectoReturn>();
             CreateMap<Foto , FotoReturn>();
+            CreateMap<EditarProyecto , Proyecto>();
+            CreateMap<ProyectoGuardar , Proyecto>();
         }
     }
 }
